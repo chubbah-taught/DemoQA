@@ -4,7 +4,7 @@ namespace DemoQA.Contexts
 {
     public class ElementsContext
     {
-        public Dictionary<string, IWebElement> Elements { get; private set; } = [];
+        private Dictionary<string, IWebElement> Elements { get; } = [];
 
         public void AddElement(string name, IWebElement element)
         {
