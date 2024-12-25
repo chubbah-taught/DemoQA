@@ -1,40 +1,40 @@
 ﻿using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
-using OpenQA.Selenium.Firefox;
 using OpenQA.Selenium.Edge;
+using OpenQA.Selenium.Firefox;
 using WebDriverManager;
 using WebDriverManager.DriverConfigs.Impl;
 
+namespace DemoQA.Drivers;
+
 public static class WebDriverSetup
 {
-    private static IWebDriver _driver;
-
+    // Define browser type
+    private const string Browser = "chrome";
+    
+    private static IWebDriver? _driver;
+    
     public static IWebDriver GetDriver()
     {
-        if (_driver == null)
+        switch (Browser.ToLower())
         {
-            var browser = "chrome";
+            case "chrome":
+                new DriverManager().SetUpDriver(new ChromeConfig());
+                _driver = new ChromeDriver();
+                break;
 
-            switch (browser.ToLower())
-            {
-                case "chrome":
-                    new DriverManager().SetUpDriver(new ChromeConfig());
-                    _driver = new ChromeDriver();
-                    break;
+            case "firefox":
+                new DriverManager().SetUpDriver(new FirefoxConfig());
+                _driver = new FirefoxDriver();
+                break;
 
-                case "firefox":
-                    new DriverManager().SetUpDriver(new FirefoxConfig());
-                    _driver = new FirefoxDriver();
-                    break;
+            case "edge":
+                new DriverManager().SetUpDriver(new EdgeConfig());
+                _driver = new EdgeDriver();
+                break;
 
-                case "edge":
-                    new DriverManager().SetUpDriver(new EdgeConfig());
-                    _driver = new EdgeDriver();
-                    break;
-
-                default:
-                    throw new ArgumentException($"Browser '{browser}' is not supported. Please use 'chrome', 'firefox', or 'edge'");
-            }
+            default:
+                throw new ArgumentException($"Browser '{Browser}' is not supported. Please use 'chrome', 'firefox', or 'edge'");
         }
 
         return _driver;
