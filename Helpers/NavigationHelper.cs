@@ -7,8 +7,9 @@ namespace DemoQA.Helpers
     {
         private const string HomepageUrl = "https://demoqa.com/";
 
-        public static void OpenHomepage(IWebDriver driver)
+        public static void OpenHomepage(IWebDriver? driver)
         {
+            if (driver == null) throw new NullReferenceException("Webdriver currently null but it must be initialized first");
             driver.Navigate().GoToUrl(HomepageUrl);
         }
 
