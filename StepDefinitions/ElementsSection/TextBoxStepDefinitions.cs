@@ -1,85 +1,111 @@
 using OpenQA.Selenium;
 using DemoQA.Helpers;
 using DemoQA.Contexts;
+using DemoQA.Drivers;
 using Reqnroll;
+using FluentAssertions;
 
 namespace DemoQA.StepDefinitions.ElementsSection
 {
     [Binding]
     public class TextBoxStepDefinitions
     {
-        private readonly IWebDriver _driver;
-        private readonly ElementsContext _context;
+        private readonly IWebDriver? _driver;
 
-        public TextBoxStepDefinitions(ElementsContext context)
+        private TextBoxStepDefinitions(ElementsContext context)
         {
             _driver = WebDriverSetup.GetDriver();
-            _context = context;
         }
 
         [Given("I am on the homepage")]
-        public void GivenIAmOnTheHomepage()
+        private void GivenIAmOnTheHomepage()
         {
             NavigationHelper.OpenHomepage(_driver);
-
-            IWebElement elementsButton = _driver.FindElement(By.XPath("//h5[text()='Elements']"));
-            _context.AddElement("elementsButton", elementsButton);
         }
 
         [When("I click on Elements section")]
-        public void WhenIClickOnElementsSection()
+        private void WhenIClickOnElementsSection()
         {
-            var elementsButton = _context.GetElement("elementsButton");
+            var elementsButton = _driver!.FindElement(By.XPath("//h5[text()='Elements']"));
             NavigationHelper.ScrollToElement(_driver, elementsButton);
             elementsButton.Click();
         }
 
         [When("I click on Text Box section")]
-        public void WhenIClickOnTextBoxSection()
+        private void WhenIClickOnTextBoxSection()
         {
-            throw new PendingStepException();
+            var textBoxButton = _driver!.FindElement(By.XPath("//span[text()='Text Box']"));
+            textBoxButton.Click();
+        }
+        
+        [When(@"I enter ""(.*)"" in Full Name field")]
+        private void WhenIEnterInFullNameField(string userName)
+        {
+            var fullNameField = _driver!.FindElement(By.Id("userName"));
+            fullNameField.SendKeys(userName);
         }
 
-        [When("I enter {string} in Full Name field")]
-        public void WhenIEnterInFullNameField(string p0)
+        [When(@"I enter ""(.*)"" in Email field")]
+        private void WhenIEnterInEmailField(string userEmail)
         {
-            throw new PendingStepException();
+            var emailField = _driver!.FindElement(By.Id("userEmail"));
+            emailField.SendKeys(userEmail);
         }
 
-        [When("I enter {string} in Email field")]
-        public void WhenIEnterInEmailField(string p0)
+        [When(@"I enter ""(.*)"" in Current Address field")]
+        private void WhenIEnterInCurrentAddressField(string userCurrentAddress)
         {
-            throw new PendingStepException();
+            var currentAddressField = _driver!.FindElement(By.Id("currentAddress"));
+            currentAddressField.SendKeys(userCurrentAddress);
         }
 
-        [When("I enter {string} in Current Address field")]
-        public void WhenIEnterInCurrentAddressField(string p0)
+        [When(@"I enter ""(.*)"" in Permanent Address field")]
+        private void WhenIEnterInPermanentAddressField(string userPermanentAddress)
         {
-            throw new PendingStepException();
-        }
-
-        [When("I enter {string} in Permanent Address field")]
-        public void WhenIEnterInPermanentAddressField(string p0)
-        {
-            throw new PendingStepException();
+            var permanentAddressField = _driver!.FindElement(By.Id("permanentAddress"));
+            permanentAddressField.SendKeys(userPermanentAddress);
         }
 
         [When("I click on Submit button")]
-        public void WhenIClickOnSubmitButton()
+        private void WhenIClickOnSubmitButton()
         {
-            throw new PendingStepException();
+            var submitButton = _driver!.FindElement(By.Id("submit"));
+            submitButton.Click();
         }
 
-        [Then("a new section appears")]
-        public void ThenANewSectionAppears()
+        [Then("output section appears")]
+        private void OutputSectionAppears()
         {
-            throw new PendingStepException();
+            var outputSection = _driver!.FindElement(By.Id("output"));
+            outputSection.Should().NotBeNull("Output section should appear on the screen");
         }
 
-        [Then("I see {string}")]
-        public void ThenISee(string p0)
+        [Then("""I see "(.*)" in name field""")]
+        public void ThenISeeInNameField(string expectedUserName)
         {
-            throw new PendingStepException();
+            var nameField = _driver!.FindElement(By.Id("name"));
+            nameField.Text.Should().Contain(expectedUserName);
+        }
+
+        [Then("""I see "(.*)" in email field""")]
+        public void ThenISeeInEmailField(string expectedUserEmail)
+        {
+            var emailField = _driver!.FindElement(By.Id("email"));
+            emailField.Text.Should().Contain(expectedUserEmail);
+        }
+
+        [Then("""I see "(.*)" in current address field""")]
+        public void ThenISeeInCurrentAddressField(string expectedUserCurrentAddress)
+        {
+            var currentAddressField = _driver!.FindElement(By.Id("currentAddress"));
+            currentAddressField.Text.Should().Contain(expectedUserCurrentAddress);
+        }
+
+        [Then("""I see "(.*)" in permanent address field""")]
+        public void ThenISeeInPermanentAddressField(string expectedUserPermanentAddress)
+        {
+            var permanentAddressField = _driver!.FindElement(By.Id("permanentAddress"));
+            permanentAddressField.Text.Should().Contain(expectedUserPermanentAddress);
         }
     }
 }

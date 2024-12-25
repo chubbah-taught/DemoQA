@@ -12,13 +12,8 @@ Scenario: I enter all data as expected
 	And I enter "1234 Elm Street" in Current Address field
 	And I enter "5678 Oak Avenue" in Permanent Address field
 	And I click on Submit button
-	Then a new section appears
-	And I see "Name:Jane Doe"
-	And I see "Email:janedoe@example.com"
-	And I see "Current Address :1234 Elm Street"
-	And I see "Permananet Address :5678 Oak Avenue"
-
-# Scenario: I enter Full Name only, as expected
-# Scenario: I enter Email only, as expected
-# Scenario: I enter Current Address only, as expected
-# Scenario: I enter Permanent Address only, as expected
+	Then output section appears
+	And I see "Jane Doe" in name field
+	And I see "janedoe@example.com" in email field
+	And I see "1234 Elm Street" in current address field
+	And I see "5678 Oak Avenue" in permanent address field
