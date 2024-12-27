@@ -111,4 +111,31 @@ public class TextBoxStepDefinitions
         var permanentAddressField = _context.GetElement("outPutSection").FindElement(By.Id("permanentAddress"));
         permanentAddressField.Text.Should().Contain(expectedUserPermanentAddress);
     }
+
+    [Then(@"email field state is changed to error state")]
+    public void ThenEmailFieldStateIsChangedToErrorState()
+    {
+        try
+        {
+            _driver!.FindElement(By.XPath("//input[@class='mr-sm-2 field-error form-control']"));
+        }
+        catch (NoSuchElementException)
+        {
+            throw new AssertionException("Email field error state should be present when invalid email entered.");
+        }
+    }
+
+    [Then(@"output section is empty")]
+    public void ThenOutputSectionIsEmpty()
+    {
+        var nameField = _driver!.FindElement(By.Id("output")).FindElements(By.Id("name"));
+        var emailField = _driver!.FindElement(By.Id("output")).FindElements(By.Id("email"));
+        var currentAddressField = _driver!.FindElement(By.Id("output")).FindElements(By.Id("currentAddress"));
+        var permanentAddressField = _driver!.FindElement(By.Id("output")).FindElements(By.Id("permanentAddress"));
+
+        nameField.Count.Should().BeLessThan(1);
+        emailField.Count.Should().BeLessThan(1);
+        currentAddressField.Count.Should().BeLessThan(1);
+        permanentAddressField.Count.Should().BeLessThan(1);
+    }
 }
