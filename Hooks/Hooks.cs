@@ -6,7 +6,7 @@ namespace DemoQA.Hooks
     [Binding]
     public class Hooks
     {
-        [AfterTestRun]
+        [AfterScenario]
         public static void AfterTestRun()
         {
             WebDriverSetup.QuitDriver();
