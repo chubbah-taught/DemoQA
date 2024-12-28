@@ -10,7 +10,7 @@ namespace DemoQA.Drivers;
 public static class WebDriverSetup
 {
     // Define browser type
-    private const string Browser = "chrome";
+    private const string Browser = "firefox";
     
     private static IWebDriver? _driver;
     
@@ -20,17 +20,23 @@ public static class WebDriverSetup
         {
             case "chrome":
                 new DriverManager().SetUpDriver(new ChromeConfig());
-                _driver = new ChromeDriver();
+                var chromeOptions = new ChromeOptions();
+                chromeOptions.AddArgument("--start-maximized");
+                _driver = new ChromeDriver(chromeOptions);
                 break;
 
             case "firefox":
                 new DriverManager().SetUpDriver(new FirefoxConfig());
-                _driver = new FirefoxDriver();
+                var fireFoxOptions = new FirefoxOptions();
+                fireFoxOptions.AddArgument("--start-maximized");
+                _driver = new FirefoxDriver(fireFoxOptions);
                 break;
 
             case "edge":
                 new DriverManager().SetUpDriver(new EdgeConfig());
-                _driver = new EdgeDriver();
+                var edgeOptions = new EdgeOptions();
+                edgeOptions.AddArgument("start-maximized");
+                _driver = new EdgeDriver(edgeOptions);
                 break;
 
             default:
