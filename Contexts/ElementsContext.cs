@@ -4,20 +4,28 @@ namespace DemoQA.Contexts
 {
     public class ElementsContext
     {
-        private Dictionary<string, IWebElement> Elements { get; } = [];
+        private Dictionary<string, By> Locators { get; } = [];
 
-        public void AddElement(string name, IWebElement element)
+        public void AddLocator(string name, By locator)
         {
-            Elements[name] = element;
+            Locators[name] = locator;
         }
 
-        public IWebElement GetElement(string name)
+        public By GetLocator(string name)
         {
-            if (Elements.TryGetValue(name, out var element))
+            if (Locators.TryGetValue(name, out var locator))
             {
-                return element;
+                return locator;
             }
-            throw new KeyNotFoundException($"No element found for key '{name}'");
+            throw new KeyNotFoundException($"No locator found for key '{name}'");
+        }
+
+        public IWebElement GetElement(IWebDriver driver, string key)
+        {
+            var locator = GetLocator(key);
+            var element = driver.FindElement(locator);
+
+            return element;
         }
     }
 }
