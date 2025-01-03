@@ -1,5 +1,13 @@
-bin/
-obj/
-/packages/
-riderModule.iml
-/_ReSharper.Caches/
+# Ignore everything by default
+*
+
+# Allow only .cs, .feature, and .csproj files
+!*.cs
+!*.feature
+!*.csproj
+
+# Allow directories so that Git tracks their contents
+!*/
+
+# Ignore obj\debug\netx.x and all its contents
+obj/debug/net*/**
