@@ -1,6 +1,4 @@
-﻿Feature: TextBox
-
-A short summary of the feature
+﻿Feature: Test functions under Elements/Text Box
 
 @elements @textbox
 	Scenario: I enter all data as expected
